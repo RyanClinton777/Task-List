@@ -1,10 +1,14 @@
 import React from 'react';
 
-//Add export keyword so we can import the class
+//export keyword allows us to import the class elsewhere
 export class Home extends React.Component {
-    render() {
-      return (
-        <h1>Home page</h1>
-      );
-    }
+  //Component class requires us to implement render method, we us it to return our view
+  render() {
+    return (
+      <div>
+        <h1>Task Manager</h1>
+        <p>Welcome. This is a productivity web app that allows you to keep track of your tasks.</p>
+      </div>
+    );
   }
+}

@@ -4,6 +4,8 @@ import {Navbar, Nav }from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; //Router for navigation
 //Component imports
 import { Home } from './components/home';
+import { Task_View} from './components/task_view';
+import { Task_Create } from './components/task_create';
 
 class App extends Component {
   render() {
@@ -13,14 +15,19 @@ class App extends Component {
         <div className="App">
           {/* Navbar */}
           <Navbar bg="dark" variant="dark">
-            <Navbar.Brand href="/">Navbar</Navbar.Brand>
+            <Navbar.Brand href="/">Task Manager</Navbar.Brand>
             <Nav className="mr-auto">
               <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link href="/Tasks">View Tasks</Nav.Link>
+              <Nav.Link href="/Tasks/Add">Add Task</Nav.Link>
             </Nav>
           </Navbar>
           {/* Routing */}
           <Switch>
+            {/* "exact" keyword stops urls with the same beginning from conflicting, i.e. without exact /Tasks would be triggered for /Tasks/Add etc. */}
             <Route path='/' component={Home} exact ></Route>
+            <Route path='/Tasks' component={Task_View} exact></Route>
+            <Route path='/Tasks/Add' component={Task_Create} ></Route>
           </Switch>
 
         </div>
