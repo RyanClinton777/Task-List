@@ -36,13 +36,10 @@ export class TaskItem extends React.Component {
                 <b>Priority:</b> {this.props.task.Priority}
               </Card.Text>
               <Card.Text>
-                <b>Category:</b> {this.props.task.Category.Name}
+                <b>Category:</b> {this.props.task.Category}
               </Card.Text>
               <Card.Text>
                 <b>Date Added:</b> {this.props.task.Date_Added}
-              </Card.Text>
-              <Card.Text>
-                <b>Deadline:</b> {this.props.task.Date_End}
               </Card.Text>
 
               <Button variant="primary" href="#"> Toggle Complete </Button>
