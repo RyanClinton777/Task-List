@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tasks } from './tasks'; //Import Tasks component
 
-//export keyword allows us to import the class elsewhere
+//This component is a page that displays a list of tasks (with the "tasks.js" component).
 export class Task_View extends React.Component {
 
   //Special object used to store data for Components
@@ -9,18 +9,20 @@ export class Task_View extends React.Component {
   state = {
     taskData: [
       {
-        "Importance ": "Low",
-        "Category": "Errand",
-        "Description, ": "Pick up milk",
-        "Status ": "Incomplete",
+        "Priority": "Low",
+        "Category": {"Name": "Errand"},
+        "Name": "Buy milk",
+        "Description": "Go to the store and pick up some milk",
+        "Status": "Incomplete",
         "Date_Added": "",
         "Date_End": "",
       },
       {
-        "Importance ": "Medium",
-        "Category": "Health",
-        "Description, ": "Go to gym",
-        "Status ": "Incomplete",
+        "Priority": "Medium",
+        "Category": {"Name": "Health"},
+        "Name": "Go to gym",
+        "Description": "Go to the gym and pick something up, then put it down again and leave",
+        "Status": "Incomplete",
         "Date_Added": "",
         "Date_End": "",
       }
@@ -28,9 +30,10 @@ export class Task_View extends React.Component {
   }
 
   render() {
+    //Using react style to apply CSS
     return (
-      <div>
-        <h1>View Tasks</h1>
+      <div text-align="center">
+        <h1 style={{display: 'flex', justifyContent: 'center'}}>View Tasks</h1>
         {/* This is JSX code, HTML with JS inside {}
         Here we are displaying the tasks component
         We create and pass in an object that will hold data, in this case I called it inputTasks

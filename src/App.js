@@ -7,6 +7,7 @@ import { Home } from './components/home';
 import { Task_View} from './components/task_view';
 import { Task_Create } from './components/task_create';
 
+//The main page for our single page app. Just contains a navbar and routing info
 class App extends Component {
   render() {
     return (
