@@ -6,8 +6,13 @@ export class Home extends React.Component {
   render() {
     return (
       <div>
-        <h1>Task Manager</h1>
-        <p>Welcome. This is a productivity web app that allows you to keep track of your tasks.</p>
+        <h1 style={{ display: 'flex', justifyContent: 'center' }}>
+          Task Manager
+        </h1>
+
+        <p style={{ display: 'flex', justifyContent: 'center' }}>
+          Welcome. This is a productivity web app that allows you to keep track of your tasks.
+          </p>
       </div>
     );
   }

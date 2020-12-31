@@ -1,5 +1,7 @@
 import React from 'react';
 import { Tasks } from './tasks'; //Import our Tasks component
+//axios allows us to perform HTTP requests asynchronously
+  //Returns a promise, which we handle in .then() and .catch()
 import axios from 'axios'; //Promise-based HTTP client
 
 //This component is a page that displays a list of tasks (with the "tasks.js" component).
@@ -14,29 +16,26 @@ export class Task_View extends React.Component {
       Sample data for reference
       {
         "Priority": "Low",
-        "Category": {"Name": "Errand"},
+        "Category": "Errand",
         "Name": "Buy milk",
         "Description": "Go to the store and pick up some milk",
         "Status": "Incomplete",
         "Date_Added": "",
-        "Date_End": ""
       },
       {
         "Priority": "Medium",
-        "Category": {"Name": "Health"},
+        "Category": "Health",
         "Name": "Go to gym",
         "Description": "Go to the gym and pick something up, then put it down again and leave",
         "Status": "Incomplete",
         "Date_Added": "",
-        "Date_End": ""
       }
     */
   }
 
   //Lifecycle hook - Gets called every time the component is loaded
   componentDidMount() {
-    //axious allows us to perform HTTP requests asynchronously
-    //Returns a promise, which we handle in .then() and .catch()
+    //Try to get our task data
     axios.get("https://jsonblob.com/api/fd04f15f-4b92-11eb-a643-edfb6d6e0075")
       .then((res) => {
         //put the data from the response into our array in state
