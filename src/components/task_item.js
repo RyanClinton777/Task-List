@@ -45,7 +45,7 @@ export class TaskItem extends React.Component {
                 <b>Deadline:</b> {this.props.task.Date_End}
               </Card.Text>
 
-              <Button variant="primary" href="#"> Mark as Complete </Button>
+              <Button variant="primary" href="#"> Toggle Complete </Button>
               <Card.Link href="#">Edit or Delete</Card.Link>
 
             </Card.Body>
