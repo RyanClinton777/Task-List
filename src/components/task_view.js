@@ -12,34 +12,17 @@ export class Task_View extends React.Component {
   state = {
     //Array to hold our tasks
     taskData: []
-    /*
-      Sample data for reference
-      {
-        "Priority": "Low",
-        "Category": "Errand",
-        "Name": "Buy milk",
-        "Description": "Go to the store and pick up some milk",
-        "Status": "Incomplete",
-        "Date_Added": "",
-      },
-      {
-        "Priority": "Medium",
-        "Category": "Health",
-        "Name": "Go to gym",
-        "Description": "Go to the gym and pick something up, then put it down again and leave",
-        "Status": "Incomplete",
-        "Date_Added": "",
-      }
-    */
   }
 
   //Lifecycle hook - Gets called every time the component is loaded
   componentDidMount() {
     //Try to get our task data
-    axios.get("https://jsonblob.com/api/fd04f15f-4b92-11eb-a643-edfb6d6e0075")
+    axios.get("http://localhost:4000/api/tasks")
       .then((res) => {
         //put the data from the response into our array in state
-        this.setState({ taskData: res.data });
+        //(Server returns a JSON array called tasks)
+        console.log(`SERVER DATA: ${res.data.tasks}`);
+        this.setState({ taskData: res.data.tasks });
       })
       .catch((err) => {
         console.log(err);
