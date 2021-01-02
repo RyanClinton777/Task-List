@@ -3,6 +3,11 @@ const express = require('express') //Import express
 const app = express() //Handle to access express functions
 const port = 4000
 const cors = require('cors'); //Cross-Origin Resource Sharing - To allow requests from the client, which is effectively another domain
+const bodyParser = require("body-parser");
+
+//---body parser code
+app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-form-urlencoded
+app.use(bodyParser.json()) // parse application/json
 
 //---cors prevention code - permission to make cross platform requests
 app.use(cors());
@@ -39,6 +44,11 @@ app.get('/api/tasks', (req, res) => {
     //Send back this data in a JSON object called tasks
     res.json({tasks: tasks});
 })
+
+//add task
+app.post("/api/tasks", (req, res) => {
+    console.log(req.body.Name);
+});
 
 //Listen on port 4000
 app.listen(port, () => {

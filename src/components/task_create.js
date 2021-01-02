@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios'; //promise based http client
 //Import bootstrap elements
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -44,7 +45,7 @@ export class Task_Create extends React.Component {
     //We use square brackets to insert a computed property in JS
     //Basically this allows us to use a variable to dynamically specify a property, since we don't know which one we are using here.
     //E.g. when the Description field is changed, this will be {Description: value} etc.
-    console.log({ [key]: value });
+    //console.log({ [key]: value });
 
     //Note setState is asynchronous, must use callback if we need to use state right after it has been changed, or the code will execute before the change has occurred.
     this.setState({ [key]: value });
@@ -65,6 +66,24 @@ export class Task_Create extends React.Component {
         + "\n " + this.state.Status
         + "\n " + this.state.Date_Added
       );
+      
+      const newTask = {
+        Name: this.state.Name,
+        Description: this.state.Description,
+        Priority: this.state.Priority,
+        Category: this.state.Category,
+        Status: this.state.Status,
+        Date_Added: this.state.Date_Added
+      }
+
+      //Use axios to send a post request to the URL of our API
+      axios.post("http://localhost:4000/api/tasks", newTask)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          alert(err);
+        });
     });
   }
 
