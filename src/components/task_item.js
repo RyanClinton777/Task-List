@@ -20,26 +20,26 @@ export class TaskItem extends React.Component {
           {/* This Accordian element allows us to hide things in a collapsable space, which is revealed when we click anywhere on the item. */}
           <Accordion.Toggle as={Card.Header} eventKey="0">
             <div display="inline-block">
-              <Card.Text style={centerStyle}><b>{this.props.task.Name}</b></Card.Text>
+              <Card.Text style={centerStyle}><b>{this.props.task.name}</b></Card.Text>
             </div>
           </Accordion.Toggle>
           {/* These are the elements hidden in the accordian */}
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <Card.Text>
-                <b>Description:</b> {this.props.task.Description}
+                <b>Description:</b> {this.props.task.description}
               </Card.Text>
               <Card.Text>
-                <b>Status:</b> {this.props.task.Status}
+                <b>Status:</b> {this.props.task.status}
               </Card.Text>
               <Card.Text>
-                <b>Priority:</b> {this.props.task.Priority}
+                <b>Priority:</b> {this.props.task.priority}
               </Card.Text>
               <Card.Text>
-                <b>Category:</b> {this.props.task.Category}
+                <b>Category:</b> {this.props.task.category}
               </Card.Text>
               <Card.Text>
-                <b>Date Added:</b> {this.props.task.Date_Added}
+                <b>Date Added:</b> {this.props.task.date_added}
               </Card.Text>
 
               <Button variant="primary" href="#"> Toggle Complete </Button>

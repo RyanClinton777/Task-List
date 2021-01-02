@@ -21,8 +21,8 @@ export class Task_View extends React.Component {
       .then((res) => {
         //put the data from the response into our array in state
         //(Server returns a JSON array called tasks)
-        console.log(`SERVER DATA: ${res.data.tasks}`);
-        this.setState({ taskData: res.data.tasks });
+        console.log(`SERVER DATA: ${JSON.stringify(res.data)}`);
+        this.setState({ taskData: res.data });
       })
       .catch((err) => {
         console.log(err);
@@ -31,6 +31,7 @@ export class Task_View extends React.Component {
 
   render() {
     //Using react style to apply CSS
+    console.log("STATE: "+ this.state.taskData);
     return (
       <div text-align="center">
         <h1 style={{ display: 'flex', justifyContent: 'center' }}>View Tasks</h1>

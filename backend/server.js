@@ -28,12 +28,12 @@ app.use(function (req, res, next) {
 //Note: Was getting Error: querySrv EREFUSED when trying to use modern connection string, this is 2.2.12 or later string.
 const connectString = 'mongodb://user_TL:Pass_TL159@cluster-tl-shard-00-00.0ejok.mongodb.net:27017,cluster-tl-shard-00-01.0ejok.mongodb.net:27017,cluster-tl-shard-00-02.0ejok.mongodb.net:27017/tasks?ssl=true&replicaSet=atlas-13tctz-shard-0&authSource=admin&retryWrites=true&w=majority';
 mongoose.connect(connectString, { useNewUrlParser: true })
-.then((res) => {
-    console.log("Connection Sucessful.");
-})
-.catch((err) => {
-    console.log("ERROR CONNECTING TO DB:\n"+err.message)
-});
+    .then((res) => {
+        console.log("Connection Sucessful.");
+    })
+    .catch((err) => {
+        console.log("ERROR CONNECTING TO DB:\n" + err.message)
+    });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -55,17 +55,35 @@ const taskSchema = mongoose.Schema({
 var taskModel = mongoose.model("tasks", taskSchema);
 
 app.get('/api/tasks', (req, res) => {
-    console.log("  TESTR");
-    //Some sample data while we test API
-    const tasks = []
-
-    //Send back this data in a JSON object called tasks
-    res.json({ tasks: tasks });
-})
+    //Use find method to get all documents from this model/collection
+    taskModel.find()
+        .then((data) => {
+            //send response with data as JSON
+            console.log("DATA: " + data);
+            res.json(data);
+        })
+        .catch((error) => {
+            console.log("ERROR GETTING TASKS:\n" + err.message)
+        });
+});
 
 //add task
 app.post("/api/tasks", (req, res) => {
-    console.log(req.body.Name);
+    //Use create method to create a new document in our DB through the model
+    taskModel.create({
+        name: req.body.Name,
+        description: req.body.Description,
+        priority: req.body.Priority,
+        category: req.body.Category,
+        status: req.body.Status,
+        date_added: req.body.Date_Added
+    })
+        .then((res) => {
+            console.log("Added task: [" + req.body.Name + "]");
+        })
+        .catch((err) => {
+            console.log("ERROR ADDING TASK:\n" + err.message)
+        });
 });
 
 //Listen on port 4000
