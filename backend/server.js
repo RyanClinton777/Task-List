@@ -4,6 +4,7 @@ const app = express() //Handle to access express functions
 const port = 4000
 const cors = require('cors'); //Cross-Origin Resource Sharing - To allow requests from the client, which is effectively another domain
 const bodyParser = require("body-parser");
+const mongoose = require('mongoose'); //For connecting to our MONGODB db
 
 //---body parser code
 app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-form-urlencoded
@@ -19,30 +20,47 @@ app.use(function (req, res, next) {
     next();
 });
 
+//DB Connection
+//DB
+//mongodb+srv://user_TL:<password>@cluster-tl.0ejok.mongodb.net/<dbname>?retryWrites=true&w=majority
+//user_TL
+//Pass_TL159
+//Note: Was getting Error: querySrv EREFUSED when trying to use modern connection string, this is 2.2.12 or later string.
+const connectString = 'mongodb://user_TL:Pass_TL159@cluster-tl-shard-00-00.0ejok.mongodb.net:27017,cluster-tl-shard-00-01.0ejok.mongodb.net:27017,cluster-tl-shard-00-02.0ejok.mongodb.net:27017/tasks?ssl=true&replicaSet=atlas-13tctz-shard-0&authSource=admin&retryWrites=true&w=majority';
+mongoose.connect(connectString, { useNewUrlParser: true })
+.then((res) => {
+    console.log("Connection Sucessful.");
+})
+.catch((err) => {
+    console.log("ERROR CONNECTING TO DB:\n"+err.message)
+});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+
+
+//Schema
+//Mongo DB doesn't have strict schemas, but we can use mongoose to enforce one.
+const taskSchema = mongoose.Schema({
+    name: String,
+    description: String,
+    priority: String,
+    category: String,
+    status: String,
+    date_added: { type: Date, default: Date.now }
+});
+
+//Database Model
+//first arg is collection name on db, second is our schema.
+var taskModel = mongoose.model("tasks", taskSchema);
+
 app.get('/api/tasks', (req, res) => {
     console.log("  TESTR");
     //Some sample data while we test API
-    const tasks = [
-        {
-            "Priority": "Low",
-            "Category": "Errand",
-            "Name": "Buy milk",
-            "Description": "Go to the store and pick up some milk",
-            "Status": "Incomplete",
-            "Date_Added": "",
-        },
-        {
-            "Priority": "Medium",
-            "Category": "Health",
-            "Name": "Go to gym",
-            "Description": "Go to the gym and pick something up, then put it down again and leave",
-            "Status": "Incomplete",
-            "Date_Added": "",
-        }
-    ]
+    const tasks = []
 
     //Send back this data in a JSON object called tasks
-    res.json({tasks: tasks});
+    res.json({ tasks: tasks });
 })
 
 //add task
