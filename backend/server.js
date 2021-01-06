@@ -103,12 +103,23 @@ app.put('/api/task/:id', (req, res) => {
     //{new:true} returns the doc after it has been updated
     taskModel.findByIdAndUpdate({ _id: req.params.id }, req.body, {new:true})
         .then((data) => {
-            console.log("---Replace DATA: " + data);
-            console.log("---DATA: " + JSON.stringify(data));
             res.send(data);
         })
         .catch((error) => {
             console.log("---ERROR UPDATING: " + error);
+            res.send(error);
+        });
+});
+
+//Delete task of given ID
+app.delete('/api/task/:id', (req, res) => {
+    //{new:true} returns the doc after it has been updated
+    taskModel.findByIdAndDelete({ _id: req.params.id })
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((error) => {
+            res.send(error);
         });
 });
 

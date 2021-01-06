@@ -2,9 +2,10 @@ import React from 'react';
 //Import bootstrap elements
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Accordion from "react-bootstrap/Accordion";
+import Accordion from "react-bootstrap/Accordion"; //Collapsable element that can contain and hide others
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom'; //Navigation and passingin parameters to url
+import axios from 'axios'; //promise-based http client
 
 
 //This component is used to display individual tasks.
@@ -12,6 +13,27 @@ import { Link } from 'react-router-dom'; //Navigation and passingin parameters t
 //If it is clicked anywhere, it will expend the accordian, revealing the other details.
 //Takes a JSON object called "task" containing the task data
 export class TaskItem extends React.Component {
+
+  constructor() {
+    super();
+
+    this.deleteTask = this.deleteTask.bind(this); //Bind to prevent errors
+  }
+
+  //Delete button handler
+  deleteTask(event) {
+    event.preventDefault(); //Prevents certain problems.
+    
+    axios.delete("http://localhost:4000/api/task/"+this.props.task._id)
+    .then(() => {
+      //This is a handle to the reloadData() method in task_view, that has been chained down through tasks.
+      this.props.ReloadData();
+    })
+    .catch((err) => {
+      alert(err);
+    });
+  }
+
   render() {
     //Define style info for centering things here
     var centerStyle = { display: 'flex', justifyContent: 'center' }
@@ -45,9 +67,9 @@ export class TaskItem extends React.Component {
                 <b>Date Added:</b> {this.props.task.date_added}
               </Card.Text>
 
+              <Button variant="danger" onClick={this.deleteTask}> Delete </Button>
               {/* Uses react-router-dom Link to pass in args */}
               <Link to={{ pathname: "/task/edit/"+this.props.task._id}}>Edit</Link>
-              
 
             </Card.Body>
           </Accordion.Collapse>

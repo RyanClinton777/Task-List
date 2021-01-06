@@ -15,7 +15,7 @@ export class Tasks extends React.Component {
       return <div class="center">
         <Accordion>
           {/* Get a Task_Item component, pass in the current task object. */}
-          <TaskItem task={currentTask}></TaskItem>
+          <TaskItem task={currentTask} ReloadData={this.props.ReloadData}></TaskItem>
         </Accordion>
       </div>
     });

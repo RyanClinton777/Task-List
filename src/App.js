@@ -31,6 +31,7 @@ class App extends Component {
             <Route path='/Tasks' component={Task_View} exact></Route>
             <Route path='/Tasks/Add' component={Task_Create} ></Route>
             <Route path='/Task/Edit/:id' component={Task_Edit} ></Route>
+            <Route path='/Task/Delete/:id' component={Task_Edit} ></Route>
           </Switch>
 
         </div>
