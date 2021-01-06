@@ -3,8 +3,7 @@ import React from 'react';
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion"; //Collapsable element that can contain and hide others
-import { Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; //Navigation and passingin parameters to url
+import { ButtonGroup, Container } from 'react-bootstrap';
 import axios from 'axios'; //promise-based http client
 
 
@@ -23,25 +22,33 @@ export class TaskItem extends React.Component {
   //Delete button handler
   deleteTask(event) {
     event.preventDefault(); //Prevents certain problems.
-    
-    axios.delete("http://localhost:4000/api/task/"+this.props.task._id)
-    .then(() => {
-      //This is a handle to the reloadData() method in task_view, that has been chained down through tasks.
-      this.props.ReloadData();
-    })
-    .catch((err) => {
-      alert(err);
-    });
+
+    axios.delete("http://localhost:4000/api/task/" + this.props.task._id)
+      .then(() => {
+        //This is a handle to the reloadData() method in task_view, that has been chained down through tasks.
+        this.props.ReloadData();
+      })
+      .catch((err) => {
+        alert(err);
+      });
   }
 
   render() {
     //Define style info for centering things here
     var centerStyle = { display: 'flex', justifyContent: 'center' }
 
-    //Colour = 
+    var borderColour;
+
+    if (this.props.task.status == "Complete") {
+      borderColour = "success";
+    }
+    else if (this.props.task.status == "Incomplete") {
+      borderColour = "danger";
+    }
+
     return (
       <Container>
-        <Card>
+        <Card border={borderColour}>
           {/* This Accordian element allows us to hide things in a collapsable space, which is revealed when we click anywhere on the item. */}
           <Accordion.Toggle as={Card.Header} eventKey="0">
             <div display="inline-block">
@@ -67,9 +74,11 @@ export class TaskItem extends React.Component {
                 <b>Date Added:</b> {this.props.task.date_added}
               </Card.Text>
 
-              <Button variant="danger" onClick={this.deleteTask}> Delete </Button>
-              {/* Uses react-router-dom Link to pass in args */}
-              <Link to={{ pathname: "/task/edit/"+this.props.task._id}}>Edit</Link>
+              {/* Edit and Delete buttons */}
+              <ButtonGroup block>
+                <Button href={"/task/edit/" + this.props.task._id}>Edit</Button>
+                <Button variant="danger" onClick={this.deleteTask}> Delete </Button>
+              </ButtonGroup>
 
             </Card.Body>
           </Accordion.Collapse>

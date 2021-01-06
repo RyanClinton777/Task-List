@@ -14,7 +14,6 @@ export class Task_Edit extends React.Component {
 
     //Define state variables and call constructor of super class
     constructor() {
-        console.log("HELP");
         //Call constructor of parent class
         super();
 
@@ -39,8 +38,6 @@ export class Task_Edit extends React.Component {
     //Get data from database for task in url (id)
     //get from db instead of taking in object to make sure it is up to date
     componentDidMount() {
-        console.log("URL ID IS " + this.props.match.params.id);
-
         //Use axios to send a get the details for this task, passing in the _id from the url
         axios.get("http://localhost:4000/api/task/" + this.props.match.params.id)
             .then((res) => {
@@ -97,7 +94,6 @@ export class Task_Edit extends React.Component {
         //Send the updatedTask in the body of the request in put
         axios.put("http://localhost:4000/api/task/" + this.state._id, updatedTask)
             .then((res) => {
-                console.log(res);
                 alert("Task updated");
             })
             .catch((err) => {

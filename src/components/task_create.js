@@ -60,14 +60,6 @@ export class Task_Create extends React.Component {
     //Set date added on successful submit
     this.setState({ Date_Added: new Date() }, () => {
       //Do this inside a callback method to ensure that the state-change has occurred.
-      alert("Task Submitted:\n " + this.state.Name
-        + "\n " + this.state.Description
-        + "\n " + this.state.Priority
-        + "\n " + this.state.Category
-        + "\n " + this.state.Status
-        + "\n " + this.state.Date_Added
-      );
-
       const newTask = {
         Name: this.state.Name,
         Description: this.state.Description,
@@ -80,7 +72,7 @@ export class Task_Create extends React.Component {
       //Use axios to send a post request to the URL of our API
       axios.post("http://localhost:4000/api/tasks", newTask)
         .then((res) => {
-          console.log(res);
+          alert("Task Added!");
         })
         .catch((err) => {
           alert(err);

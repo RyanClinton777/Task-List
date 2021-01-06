@@ -27,8 +27,6 @@ export class Task_View extends React.Component {
     axios.get("http://localhost:4000/api/tasks")
       .then((res) => {
         //put the data from the response into our array in state
-        //(Server returns a JSON array called tasks)
-        //console.log(`SERVER DATA: ${JSON.stringify(res.data)}`);
         this.setState({ taskData: res.data });
       })
       .catch((err) => {
@@ -41,12 +39,10 @@ export class Task_View extends React.Component {
     axios.get("http://localhost:4000/api/tasks")
       .then((res) => {
         //put the data from the response into our array in state
-        //(Server returns a JSON array called tasks)
-        //console.log(`SERVER DATA: ${JSON.stringify(res.data)}`);
         this.setState({ taskData: res.data });
       })
       .catch((err) => {
-        console.log(err);
+        alert("Error Reloading Data:\n"+err);
       });
   }
 
