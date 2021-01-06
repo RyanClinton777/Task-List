@@ -5,6 +5,7 @@ const port = 4000
 const cors = require('cors'); //Cross-Origin Resource Sharing - To allow requests from the client, which is effectively another domain
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose'); //For connecting to our MONGODB db
+const path = require('path'); //For file paths
 
 //---body parser code
 app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-form-urlencoded
@@ -19,6 +20,10 @@ app.use(function (req, res, next) {
         "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
+//Tell express where to find the build and static folders, for configuration
+app.use(express.static(path.join(__dirname, "/../build")));
+app.use(express.static(path.join(__dirname, "build//static")));
 
 //DB Connection
 //DB
@@ -60,7 +65,6 @@ app.get('/api/tasks', (req, res) => {
     taskModel.find()
         .then((data) => {
             //send response with data as JSON
-            console.log("DATA: " + data);
             res.json(data);
         })
         .catch((error) => {
@@ -75,7 +79,6 @@ app.get('/api/tasks/Completed', (req, res) => {
     taskModel.find({ status: "Complete" })
         .then((data) => {
             //send response with data as JSON
-            console.log("Completed tasks: " + data);
             res.json(data);
         })
         .catch((error) => {
@@ -85,8 +88,6 @@ app.get('/api/tasks/Completed', (req, res) => {
 
 //View a specific task (by id)
 app.get('/api/task/:id', (req, res) => {
-    console.log("ATTEMPT FIND BY ID: " + req.params.id);
-
     //Use find method to get all documents from this model/collection
     taskModel.findById(req.params.id)
         .then((data) => {
@@ -142,8 +143,12 @@ app.post("/api/tasks", (req, res) => {
         });
 });
 
-//Listen on port 4000
+//All unhandled routes, send index.html file of build
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname,"/../build/index.html"));
+});
+
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`App listening at http://localhost:${port}`)
 })
 

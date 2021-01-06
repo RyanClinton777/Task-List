@@ -72,11 +72,14 @@ export class Task_Create extends React.Component {
       //Use axios to send a post request to the URL of our API
       axios.post("http://localhost:4000/api/tasks", newTask)
         .then((res) => {
-          alert("Task Added!");
         })
         .catch((err) => {
-          alert(err);
+          console.log(err);
+          return;
         });
+
+        //Notify user (alerts weren't working from inside .then() for some reason)
+        alert("Task Added!");
     });
   }
 
