@@ -102,12 +102,24 @@ app.get('/api/task/:id', (req, res) => {
 //Update (replace) specific task (given of _id)
 app.put('/api/task/:id', (req, res) => {
     //{new:true} returns the doc after it has been updated
-    taskModel.findByIdAndUpdate({ _id: req.params.id }, req.body, {new:true})
+    taskModel.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
         .then((data) => {
             res.send(data);
         })
         .catch((error) => {
             console.log("---ERROR UPDATING: " + error);
+            res.send(error);
+        });
+});
+
+//Update just the status of a task
+app.put("/api/task/status/:id", (req, res) => {
+    taskModel.findByIdAndUpdate(req.params.id, {status: req.body.status}, { new: true })
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((error) => {
+            console.log("---ERROR UPDATING STATUS: " + error);
             res.send(error);
         });
 });
@@ -145,7 +157,7 @@ app.post("/api/tasks", (req, res) => {
 
 //All unhandled routes, send index.html file of build
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname,"/../build/index.html"));
+    res.sendFile(path.join(__dirname, "/../build/index.html"));
 });
 
 app.listen(port, () => {

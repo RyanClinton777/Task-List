@@ -17,6 +17,7 @@ export class TaskItem extends React.Component {
     super();
 
     this.deleteTask = this.deleteTask.bind(this); //Bind to prevent errors
+    this.toggleTaskComplete = this.toggleTaskComplete.bind(this);
   }
 
   //Delete button handler
@@ -24,6 +25,23 @@ export class TaskItem extends React.Component {
     event.preventDefault(); //Prevents certain problems.
 
     axios.delete("http://localhost:4000/api/task/" + this.props.task._id)
+      .then(() => {
+        //This is a handle to the reloadData() method in task_view, that has been chained down through tasks.
+        this.props.ReloadData();
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
+
+  //Used to quickly Set a task as complete or visa versa
+  toggleTaskComplete(event) {
+    event.preventDefault();
+
+    //New status value depends on current one. Toggle from Complete to Incomplete etc.
+    var newStatus = this.props.task.status == "Complete"? "Incomplete" : "Complete";
+
+    axios.put("http://localhost:4000/api/task/status/" + this.props.task._id, {status: newStatus})
       .then(() => {
         //This is a handle to the reloadData() method in task_view, that has been chained down through tasks.
         this.props.ReloadData();
@@ -74,8 +92,9 @@ export class TaskItem extends React.Component {
                 <b>Date Added:</b> {this.props.task.date_added}
               </Card.Text>
 
-              {/* Edit and Delete buttons */}
+              {/* Mark as Complete, Edit, and Delete buttons */}
               <ButtonGroup block>
+                <Button variant="secondary" onClick={this.toggleTaskComplete} >Toggle Complete</Button>
                 <Button href={"/task/edit/" + this.props.task._id}>Edit</Button>
                 <Button variant="danger" onClick={this.deleteTask}> Delete </Button>
               </ButtonGroup>
