@@ -3,6 +3,7 @@ import { Tasks } from './tasks'; //Import our Tasks component
 //axios allows us to perform HTTP requests asynchronously
   //Returns a promise, which we handle in .then() and .catch()
 import axios from 'axios'; //Promise-based HTTP client
+import { Container } from 'react-bootstrap';
 
 //This component is a page that displays a list of tasks (with the "tasks.js" component).
 export class Task_View extends React.Component {
@@ -21,7 +22,7 @@ export class Task_View extends React.Component {
       .then((res) => {
         //put the data from the response into our array in state
         //(Server returns a JSON array called tasks)
-        console.log(`SERVER DATA: ${JSON.stringify(res.data)}`);
+        //console.log(`SERVER DATA: ${JSON.stringify(res.data)}`);
         this.setState({ taskData: res.data });
       })
       .catch((err) => {
@@ -31,9 +32,10 @@ export class Task_View extends React.Component {
 
   render() {
     //Using react style to apply CSS
-    console.log("STATE: "+ this.state.taskData);
     return (
-      <div text-align="center">
+      <Container>
+        
+        {/* Page Title */}
         <h1 style={{ display: 'flex', justifyContent: 'center' }}>View Tasks</h1>
         {/* This is JSX code, HTML with JS inside {}
         Here we are displaying the tasks component
@@ -41,7 +43,7 @@ export class Task_View extends React.Component {
         We then use JSC to put the data from the state of this component, into that object. 
         Now the tasks component can access this data, through its props (this.props.inputTasks) */}
         <Tasks inputTasks={this.state.taskData}></Tasks>
-      </div>
+      </Container>
     );
   }
 }

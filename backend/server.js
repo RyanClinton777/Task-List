@@ -54,6 +54,7 @@ const taskSchema = mongoose.Schema({
 //first arg is collection name on db, second is our schema.
 var taskModel = mongoose.model("tasks", taskSchema);
 
+//View all incompleted tasks
 app.get('/api/tasks', (req, res) => {
     //Use find method to get all documents from this model/collection
     taskModel.find()
@@ -63,7 +64,51 @@ app.get('/api/tasks', (req, res) => {
             res.json(data);
         })
         .catch((error) => {
-            console.log("ERROR GETTING TASKS:\n" + err.message)
+            res.send("ERROR GETTING TASKS:\n" + err.message)
+        });
+});
+
+
+//View all completed tasks
+app.get('/api/tasks/Completed', (req, res) => {
+    //Use find method to get all documents from this model/collection
+    taskModel.find({ status: "Complete" })
+        .then((data) => {
+            //send response with data as JSON
+            console.log("Completed tasks: " + data);
+            res.json(data);
+        })
+        .catch((error) => {
+            res.send("ERROR GETTING TASKS:\n" + err.message);
+        });
+});
+
+//View a specific task (by id)
+app.get('/api/task/:id', (req, res) => {
+    console.log("ATTEMPT FIND BY ID: " + req.params.id);
+
+    //Use find method to get all documents from this model/collection
+    taskModel.findById(req.params.id)
+        .then((data) => {
+            //send response with data as JSON
+            res.json(data);
+        })
+        .catch((error) => {
+            res.send("ERROR GETTING TASKS:\n" + err.message)
+        });
+});
+
+//Update (replace) specific task (given of _id)
+app.put('/api/task/:id', (req, res) => {
+    //{new:true} returns the doc after it has been updated
+    taskModel.findByIdAndUpdate({ _id: req.params.id }, req.body, {new:true})
+        .then((data) => {
+            console.log("---Replace DATA: " + data);
+            console.log("---DATA: " + JSON.stringify(data));
+            res.send(data);
+        })
+        .catch((error) => {
+            console.log("---ERROR UPDATING: " + error);
         });
 });
 
@@ -82,7 +127,7 @@ app.post("/api/tasks", (req, res) => {
             console.log("Added task: [" + req.body.Name + "]");
         })
         .catch((err) => {
-            console.log("ERROR ADDING TASK:\n" + err.message)
+            res.send("ERROR ADDING TASK:\n" + err.message)
         });
 });
 

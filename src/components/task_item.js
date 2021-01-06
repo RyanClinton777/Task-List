@@ -3,6 +3,9 @@ import React from 'react';
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion";
+import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom'; //Navigation and passingin parameters to url
+
 
 //This component is used to display individual tasks.
 //It displays them on a Card, which itself displays the name as an accordian toggle.
@@ -11,11 +14,11 @@ import Accordion from "react-bootstrap/Accordion";
 export class TaskItem extends React.Component {
   render() {
     //Define style info for centering things here
-    var centerStyle = {display: 'flex', justifyContent: 'center'}
+    var centerStyle = { display: 'flex', justifyContent: 'center' }
 
     //Colour = 
     return (
-      <div>
+      <Container>
         <Card>
           {/* This Accordian element allows us to hide things in a collapsable space, which is revealed when we click anywhere on the item. */}
           <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -42,13 +45,14 @@ export class TaskItem extends React.Component {
                 <b>Date Added:</b> {this.props.task.date_added}
               </Card.Text>
 
-              <Button variant="primary" href="#"> Toggle Complete </Button>
-              <Card.Link href="#">Edit or Delete</Card.Link>
+              {/* Uses react-router-dom Link to pass in args */}
+              <Link to={{ pathname: "/task/edit/"+this.props.task._id}}>Edit</Link>
+              
 
             </Card.Body>
           </Accordion.Collapse>
         </Card>
-      </div>
+      </Container>
     );
   }
 }

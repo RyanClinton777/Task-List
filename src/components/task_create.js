@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from 'react-bootstrap/Col';
+import { Container } from 'react-bootstrap';
 
 //This component is used for creating new tasks
 export class Task_Create extends React.Component {
@@ -19,7 +20,7 @@ export class Task_Create extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
 
-    this.isSubmitted = false;
+    //this.isSubmitted = false;
 
     //state is inherited from the Component class, so we don't need to define it
     //Default values on some, date_added is added on submit.
@@ -66,7 +67,7 @@ export class Task_Create extends React.Component {
         + "\n " + this.state.Status
         + "\n " + this.state.Date_Added
       );
-      
+
       const newTask = {
         Name: this.state.Name,
         Description: this.state.Description,
@@ -90,47 +91,49 @@ export class Task_Create extends React.Component {
   render() {
     return (
       // Surround with a card for easy padding
-      <Card>
-        <Card.Header>Add new task</Card.Header>
-        <Card.Body>
-          <Form onSubmit={this.onSubmit}>
-            {/* Name */}
-            <Form.Label>Name</Form.Label>
-            <Form.Control onChange={this.onChange} name="Name" placeholder="Do a thing" />
-            <br />
-            {/* Description */}
-            <Form.Label>Description</Form.Label>
-            <Form.Control onChange={this.onChange} name="Description" placeholder="Go to a certain place and do this thing" />
-            <br />
-            {/* Row with Category and Priority */}
-            <Form.Row>
-              <Col>
-                <Form.Label>Category</Form.Label>
-                {/* select is the react BS Form class for drop-down menus */}
-                <Form.Control onChange={this.onChange} name="Category" as="select" defaultValue="Errand">
-                  <option>Errand</option>
-                  <option>Personal</option>
-                  <option>Professional</option>
-                  <option>Health</option>
-                </Form.Control>
-              </Col>
-              <Col>
-                <Form.Label>Priority</Form.Label>
-                <Form.Control onChange={this.onChange} name="Priority" as="select" defaultValue="Errand">
-                  <option>Low</option>
-                  <option>Medium</option>
-                  <option>High</option>
-                </Form.Control>
-              </Col>
-            </Form.Row>
-            <br />
-            {/* Submit button */}
-            <Button variant="primary" type="submit">
-              Submit
-  </Button>
-          </Form>
-        </Card.Body>
-      </Card>
+      <Container>
+        <Card>
+          <Card.Header>Add new task</Card.Header>
+          <Card.Body>
+            <Form onSubmit={this.onSubmit}>
+              {/* Name */}
+              <Form.Label>Name</Form.Label>
+              <Form.Control onChange={this.onChange} name="Name" placeholder="Do a thing" />
+              <br />
+              {/* Description */}
+              <Form.Label>Description</Form.Label>
+              <Form.Control as="textarea" rows="3" onChange={this.onChange} name="Description" placeholder="Go to a certain place and do this thing" />
+              <br />
+              {/* Row with Category and Priority */}
+              <Form.Row>
+                <Col>
+                  <Form.Label>Category</Form.Label>
+                  {/* select is the react BS Form class for drop-down menus */}
+                  <Form.Control onChange={this.onChange} name="Category" as="select" defaultValue="Errand">
+                    <option>Errand</option>
+                    <option>Personal</option>
+                    <option>Professional</option>
+                    <option>Health</option>
+                  </Form.Control>
+                </Col>
+                <Col>
+                  <Form.Label>Priority</Form.Label>
+                  <Form.Control onChange={this.onChange} name="Priority" as="select" defaultValue="Errand">
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                  </Form.Control>
+                </Col>
+              </Form.Row>
+              <br />
+              {/* Submit button */}
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+      </Container>
     );
   }
 }

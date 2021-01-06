@@ -11,7 +11,6 @@ export class Tasks extends React.Component {
     //the task variable is the arg to this method, and it holds the current item in the collection while it loops through it
     //Basically a foreach loop
     return this.props.inputTasks.map((currentTask) => {
-      console.log(currentTask);
       //Surrounded in an Accordian, a card for each object
       return <div class="center">
         <Accordion>
